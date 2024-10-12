@@ -39,21 +39,56 @@ function getView(){
             return `
             <div class="card card-rounded shadow">
                 <div class="card-body p-2">
-                    <div class="table-responsive col-12">
-                        <table class="table table-responsive table-hover col-12">
-                            <thead class="bg-naranja text-white">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody id="tblPedidos">
-                            </tbody>
-                        </table>
+                    <div class="row align-items-center mb-3">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <img src="img/favicon.png" class="rounded me-3" width="100px" height="100px">
+                    <div>
+                        <h1 style="font-size:280%" class="text-right negrita text-danger mb-0">Purificadora Santa Clara</h1>
+                        <h2>Gestión Administrativa</h2>
                     </div>
+                </div>
+            <br>
+            <br>
+            <br>
+            <div class="col-md-6 text-end">
+                <button class="btn btn-primary me-2">Botón 1</button>
+                <button class="btn btn-secondary me-2">Botón 2</button>
+                <button class="btn btn-info">Botón 3</button>
+            </div>
+                    <div class="row">
+            <div class="col-md-6">
+                <h3 class="text-center">Report. Ventas</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="bg-naranja text-white">
+                            <tr>
+                                <th>Columna 1</th>
+                                <th>Columna 2</th>
+                                <th>Columna 3</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblVentas">
+                            <!-- Aquí irán los datos de ventas -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-center">Report. Prod</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="bg-naranja text-white">
+                            <tr>
+                                <th>Columna 1</th>
+                                <th>Columna 2</th>
+                                <th>Columna 3</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblProd">
+                            <!-- Aquí irán los datos de producción -->
+                        </tbody>
+                    </table>
+                </div>
                 </div>
             </div>
             `

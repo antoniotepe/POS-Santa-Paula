@@ -28,5 +28,11 @@ let Navegar = {
         .then(()=> {
             initView();
         })
+    },
+    dashboard_gerencia:() => {
+        F.loadScript('./views/dashboard_gerencia.js', 'root')
+        .then(() => {
+            initView();
+        })
     }
 }
