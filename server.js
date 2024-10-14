@@ -275,12 +275,15 @@ app.post("/update_cliente", function(req, res) {
   const {codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta} = req.body;
 
   let qry = `
-          UPDATE POS_EMPLEADOS
+          UPDATE POS_CLIENTES
           SET TIPO='${tipo}',
               NOMBRE='${nombre}',
+              DIRECCION='${direccion}',
               TELEFONO='${telefono}',
-              CLAVE='${clave}'
-            WHERE CODEMP=${codemp}
+              REFERENCIA='${referencia}',
+              VISITA='${visita}',
+              RUTA='${ruta}'
+            WHERE CODCLIE=${codclie}
     `;
 
     console.log(qry);

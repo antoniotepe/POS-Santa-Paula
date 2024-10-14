@@ -52,10 +52,10 @@ function getView(){
             <br>
             <div class="col-md-6 text-end">
                 <button class="btn btn-primary me-2">Botón 1</button>
-                <button class="btn btn-secondary me-2">Botón 2</button>
-                <button class="btn btn-info">Botón 3</button>
+                <button class="btn btn-secondary me-2" id="btnViewEmpleados">Empleados</button>
+                <button class="btn btn-info" id="btnViewClientes">Clientes</button>
             </div>
-                    <div class="row">
+            <div class="row">
             <div class="col-md-6">
                 <h3 class="text-center">Report. Ventas</h3>
                 <div class="table-responsive">
@@ -103,7 +103,10 @@ function getView(){
 };
 
 function addListeners(){
-
+    let btnViewClientes = document.getElementById('btnViewClientes');
+    btnViewClientes.addEventListener('click', () => {
+        Navegar.clientes();
+    })
 };
 
 function initView(){

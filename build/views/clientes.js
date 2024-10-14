@@ -1,4 +1,3 @@
-const { response } = require("express");
 
 function getView(){
     let view = {
@@ -40,7 +39,14 @@ function getView(){
             return `
             <div class="card card-rounded shadow">
                 <div class="card-body p-2">
-                    <h1 style="font-size:280%" class="negrita text-left">Clientes</h1>
+                    <div class="row">
+                        <div class="col-md-6 d-flex align-items-center mb-3">
+                            <h1 style="font-size:280%" class="negrita text-left">Clientes</h1>
+                        </div>
+                        <div class="cold-md-6">
+                            
+                        </div>
+                    </div>
                     <div class="table-responsive col-12">
                         <table class="table table-responsive table-hover col-12">
                             <thead class="bg-naranja text-white">
@@ -80,11 +86,11 @@ function getView(){
                                         <div class="form-group">
                                             <label>Tipo:</label>
                                             <select class="form-control negrita text-danger" id="cmbTipoClienteE">
-                                                <option value="casa_particular">CASA PARTICULAR</option>
-                                                <option value="tienda">TIENDA</option>
-                                                <option value="empresarial">EMPRESARIAL</option>
-                                                <option vaue="centros_deportivos">CENTROS DEPORTIVOS</option>
-                                                <option value="centros_educativos">CENTROS EDUCATIVOS</option>
+                                                <option value="CASA PARTICULAR">CASA PARTICULAR</option>
+                                                <option value="TIENDA">TIENDA</option>
+                                                <option value="EMPRESARIAL">EMPRESARIAL</option>
+                                                <option vaue="CENTROS DEPORTIVOS">CENTROS DEPORTIVOS</option>
+                                                <option value="CENTROS EDUCATIVOS">CENTROS EDUCATIVOS</option>
                                             </select>
                                         </div>
 
@@ -121,12 +127,16 @@ function getView(){
                                             </select>
                                         </div>
 
-                                        <div class="form-group" id="cmbRutasVendedorE">
+                                        <div class="form-group">
                                             <label>Ruta</label>
-                                            <select class="form-control negrita text-danger">
-                                                <option value="rut1">RUTA 1</option>
-                                                <option value="rut2">RUTA 2</option>
-                                                <option value="sn">SIN RUTA</option>
+                                            <select class="form-control negrita text-danger" id="cmbRutasVendedorE">
+                                                <option value="RUTA A">RUTA A</option>
+                                                <option value="RUTA B">RUTA B</option>
+                                                <option value="RUTA C">RUTA C</option>
+                                                <option value="RUTA D">RUTA D</option>
+                                                <option value="RUTA E">RUTA E</option>
+                                                <option value="RUTA F">RUTA F</option>
+                                                <option value="RUTA G">RUTA G</option>
                                             <select>
                                         </div>
 
@@ -210,51 +220,8 @@ function get_catalogo_clientes() {
     }, (error) => {
         container.innerHTML = 'No hay datos...'
     });
-
+    
 }
-
-function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta) {
-
-    $("#modal_editar_cliente").modal('show')
-
-    document.getElementById('cmbTipoClienteE').value = tipo;
-    document.getElementById('txtNombreClienteE').value = nombre;
-    document.getElementById('txtDireccionClienteE').value = direccion;
-    document.getElementById('txtTelefonoClienteE').value = telefono;
-    document.getElementById('txtReferenciaClienteE').value = referencia;
-    document.getElementById('cmbVisitaClienteE').value = visita;
-    document.getElementById('cmbRutasVendedorE').value = ruta;
-
-    let btnEditarCliente = document.getElementById('btnEditarCliente');
-    btnEditarCliente.addEventListener('click', ()=> {
-        F.Confirmacion("¿Está seguro que desea editar el cliente?")
-        .then((value) => {
-            if(value==true) {
-
-                btnEditarCliente.disabled = true;
-                btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
-
-                update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta)
-                .then(() => {
-                    F.Aviso('Cliente editado exitosamente!!!');
-                    get_catalogo_clientes()
-                    $("#modal_editar_cliente").modal('hide');
-                    limpiar_datos_clientes();
-
-                    btnEditarCliente.disabled = false;
-                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
-                })
-                .catch(() => {
-                    F.Aviso('No se pudo guardar el cliente');
-                    btnEditarCliente.disabled = false;
-                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
-
-                })
-            }
-        })
-    })
-}
-
 
 function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta) {
     return new Promise((resolve, reject) => {
@@ -282,6 +249,59 @@ function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita
 
     })
 }
+
+function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta) {
+
+    $("#modal_editar_cliente").modal('show')
+    document.getElementById('cmbTipoClienteE').value = tipo;
+    document.getElementById('txtNombreClienteE').value = nombre;
+    document.getElementById('txtDireccionClienteE').value = direccion;
+    document.getElementById('txtTelefonoClienteE').value = telefono;
+    document.getElementById('txtReferenciaClienteE').value = referencia;
+    document.getElementById('cmbVisitaClienteE').value = visita;
+    document.getElementById('cmbRutasVendedorE').value = ruta;
+
+
+    let btnEditarCliente = document.getElementById('btnEditarCliente');
+    btnEditarCliente.addEventListener('click', ()=> {
+        F.Confirmacion("¿Está seguro que desea editar el cliente?")
+        .then((value) => {
+            if(value==true) {
+
+                let tipoE = document.getElementById('cmbTipoClienteE').value;
+                let nombreE = document.getElementById('txtNombreClienteE').value;
+                let direccionE = document.getElementById('txtDireccionClienteE').value;
+                let telefonoE = document.getElementById('txtTelefonoClienteE').value;
+                let referenciaE = document.getElementById('txtReferenciaClienteE').value;
+                let visitaE = document.getElementById('cmbVisitaClienteE').value;
+                let rutaE = document.getElementById('cmbRutasVendedorE').value;
+
+                btnEditarCliente.disabled = true;
+                btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+
+                update_cliente(codclie,tipoE,nombreE,direccionE,telefonoE,referenciaE,visitaE,rutaE)
+                .then(() => {
+                    F.Aviso('Cliente editado exitosamente!!!');
+                    get_catalogo_clientes()
+                    $("#modal_editar_cliente").modal('hide');
+                    limpiar_datos_clientes();
+
+                    btnEditarCliente.disabled = false;
+                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+                })
+                .catch(() => {
+                    F.Aviso('No se pudo guardar el cliente');
+                    btnEditarCliente.disabled = false;
+                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+
+                })
+            }
+        })
+    })
+}
+
+
+
 function limpiar_datos_clientes(){
     document.getElementById('cmbTipoClienteE').value = '';
     document.getElementById('txtNombreClienteE').value = '';
