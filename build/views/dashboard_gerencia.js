@@ -51,7 +51,7 @@ function getView(){
             <br>
             <br>
             <div class="col-md-6 text-end">
-                <button class="btn btn-primary me-2">Botón 1</button>
+                <button class="btn btn-primary me-2" id="btnViewVentas">Ventas</button>
                 <button class="btn btn-secondary me-2" id="btnViewEmpleados">Empleados</button>
                 <button class="btn btn-info" id="btnViewClientes">Clientes</button>
             </div>
@@ -103,10 +103,21 @@ function getView(){
 };
 
 function addListeners(){
+    let btnViewVentas = document.getElementById('btnViewVentas');
+    btnViewVentas.addEventListener('click', () => {
+        Navegar.ventas();
+    });
+
     let btnViewClientes = document.getElementById('btnViewClientes');
     btnViewClientes.addEventListener('click', () => {
         Navegar.clientes();
-    })
+    });
+
+    let btnViewEmpleados = document.getElementById('btnViewEmpleados');
+    btnViewEmpleados.addEventListener('click', () => {
+        Navegar.gerencia();
+    });
+
 };
 
 function initView(){
