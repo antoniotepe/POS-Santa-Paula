@@ -126,7 +126,8 @@ function enviarLogin() {
             let usuarioData = data.recordset[0]; // Obtener el primer (y único) usuario
             if (usuarioData.tipo === "GERENTE") {
                 GlobalCodemp = usuarioData.CODIGO;
-                Navegar.gerencia();
+                Navegar.dashboard_gerencia();
+                // Navegar.gerencia();
             } else if (usuarioData.tipo === "VENDEDOR") {
                 GlobalCodemp = usuarioData.CODIGO;
                 GlobalRuta = usuarioData.ruta;

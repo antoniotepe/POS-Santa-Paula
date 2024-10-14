@@ -33,4 +33,3 @@ InicializarServiceWorkerNotif();
 
 
 Navegar.login();
-Navegar.dashboard_gerencia();
