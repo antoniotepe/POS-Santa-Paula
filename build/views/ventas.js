@@ -130,7 +130,6 @@ function getView(){
                                     <tr>
                                         <td>Nombre</td>
                                         <td>Dirección</td>
-                                        <td>Teléfonos</td>
                                         <td>Garrafones Prestados</td>
                                     </tr>
                                 </thead>
@@ -648,6 +647,39 @@ function get_lista_clientes(){
             data.recordset.map((r)=>{
                 str += `
                                 <tr class="hand" >
+                                    <td>${r.NOMBRE}
+                                        <br>
+                                        <small class="negrita text-info">Tel:${r.TELEFONO}</small>
+                                        <br>
+                                         <button class="btn btn-info btn-sm hand shadow" onclick="go_to_edit('${r.CODCLIE}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}','${r.GARRAFONES}')">
+                                            <i class="fal fa-edit"></i>Editar
+                                        </button>
+                                    </td>
+                                    <td>${r.DIRECCION}
+                                        <br>
+                                        <small class="negrita text-secondary">${r.REFERENCIA}</small>
+                                        <br>
+                                        <button class="btn btn-success btn-sm hand shadow" onclick="go_to_pedido('${r.CODCLIE}','${r.NOMBRE}')">
+                                            <i class="fal fa-plus"></i>Nuevo Pedido
+                                        </button>
+                                    </td>
+                                    <td class="negrita text-danger">${r.GARRAFONES}</td>
+                                </tr>
+                `
+            })
+
+            container.innerHTML = str;
+        }else{
+            container.innerHTML = 'No hay datos...'
+        }             
+    }, (error) => {
+        container.innerHTML = 'No hay datos...'
+    });
+
+
+    /**
+     str += `
+                                <tr class="hand" >
                                     <td>${r.NOMBRE}</td>
                                     <td>${r.DIRECCION}</td>
                                     <td>${r.TELEFONO}</td>
@@ -664,16 +696,7 @@ function get_lista_clientes(){
                                     </td>
                                 </tr>
                 `
-            })
-
-            container.innerHTML = str;
-        }else{
-            container.innerHTML = 'No hay datos...'
-        }             
-    }, (error) => {
-        container.innerHTML = 'No hay datos...'
-    });
-
+     */
 
 }
 
