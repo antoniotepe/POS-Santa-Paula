@@ -272,7 +272,7 @@ app.post("/lista_cliente",function(req,res){
 
 app.post("/update_cliente", function(req, res) {
 
-  const {codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta} = req.body;
+  const {codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta,garrafones} = req.body;
 
   let qry = `
           UPDATE POS_CLIENTES
