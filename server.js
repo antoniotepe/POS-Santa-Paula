@@ -92,7 +92,7 @@ app.post("/lista_clientes",function(req,res){
 
     const {filtro} = req.body;
 
-    let qry = `SELECT top 70 CODCLIE, TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD
+    let qry = `SELECT top 70 CODCLIE, TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,GARRAFONES
       FROM POS_CLIENTES WHERE NOMBRE LIKE '%${filtro}%';`
 
 
@@ -106,9 +106,9 @@ app.post("/insert_cliente",function(req,res){
   const {tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud,ruta} = req.body;
 
   let qry = `INSERT INTO POS_CLIENTES 
-              (TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,RUTA)
+              (TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,RUTA,GARRAFONES)
                 VALUES
-              ('${tipo}','${nombre}','${direccion}','${telefono}','${referencia}','${visita}','${latitud}','${longitud}','${ruta}')
+              ('${tipo}','${nombre}','${direccion}','${telefono}','${referencia}','${visita}','${latitud}','${longitud}','${ruta}','${garrafones}')
             `
 
             console.log(qry)
@@ -262,7 +262,7 @@ app.post("/lista_cliente",function(req,res){
 
   //const {filtro} = req.body;
 
-  let qry = `SELECT CODCLIE,DPI,NIT,TIPO,NOMBRE,DIRECCION,CODMUN,CODDEPTO,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,RUTA
+  let qry = `SELECT CODCLIE,DPI,NIT,TIPO,NOMBRE,DIRECCION,CODMUN,CODDEPTO,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,RUTA,GARRAFONES
             FROM POS_CLIENTES `
 
 
@@ -282,7 +282,8 @@ app.post("/update_cliente", function(req, res) {
               TELEFONO='${telefono}',
               REFERENCIA='${referencia}',
               VISITA='${visita}',
-              RUTA='${ruta}'
+              RUTA='${ruta}',
+              GARRAFONES='${garrafones}'
             WHERE CODCLIE=${codclie}
     `;
 

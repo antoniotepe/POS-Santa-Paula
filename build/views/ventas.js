@@ -131,6 +131,7 @@ function getView(){
                                         <td>Nombre</td>
                                         <td>Dirección</td>
                                         <td>Teléfonos</td>
+                                        <td>Garrafones</td>
                                     </tr>
                                 </thead>
                                 <tbody id="tblDataClientes">
@@ -305,6 +306,11 @@ function getView(){
                                             <input type="text" class="form-control" id="txtReferenciaCliente"/>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>Garrafones prestados:</label>
+                                            <input type="number" class="form-control border-danger" id="txtGarrafonesCliente" />
+                                        </div>
+
 
                                     </div>
                                 </div>
@@ -412,6 +418,7 @@ function addListeners(){
                         let telefono = document.getElementById('txtTelefonoCliente').value || '';
                         let referencia = document.getElementById('txtReferenciaCliente').value;
                         let visita = document.getElementById('cmbVisitaCliente').value;
+                        let garrafones = document.getElementById('txtGarrafonesCliente').value;
                         let latitud = location.latitude;
                         let longitud = location.longitude;
 
@@ -419,7 +426,7 @@ function addListeners(){
                         btnGuardarCliente.disabled = true;
                         btnGuardarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-                        insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud)
+                        insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud,garrafones)
                         .then(()=>{
                             
                             F.Aviso('Cliente guardado exitosamente!!');
@@ -563,6 +570,7 @@ function limpiar_datos_cliente(){
     document.getElementById('txtDireccionCliente').value = '';
     document.getElementById('txtTelefonoCliente').value = '';
     document.getElementById('txtReferenciaCliente').value = '';
+    document.getElementById('txtGarrafonesCliente').value = '';
 
 
 }
@@ -590,9 +598,15 @@ function get_lista_clientes(){
                                     <td>${r.NOMBRE}</td>
                                     <td>${r.DIRECCION}</td>
                                     <td>${r.TELEFONO}</td>
+                                    <td>${r.GARRAFONES}</td>
                                     <td>
                                         <button class="btn btn-info btn-circle btn-md hand shadow">
-                                            <i class="fal fa-plus"></i>
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-circle btn-md hand shadow">
+                                            <i class="fal fa-arrow-right"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -734,7 +748,7 @@ function actualizarTotal() {
     });
 }
 
-function insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud){
+function insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud,garrafones){
 
     return new Promise((resolve,reject)=>{
 
@@ -747,7 +761,8 @@ function insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud
             visita:visita,
             latitud:latitud,
             longitud:longitud,
-            ruta:GlobalRuta
+            ruta:GlobalRuta,
+            garrafones:garrafones
         })
         .then((response) => {
             let data = response.data;
