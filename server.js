@@ -103,12 +103,12 @@ app.post("/lista_clientes",function(req,res){
 
 app.post("/insert_cliente",function(req,res){
 
-  const {tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud,ruta} = req.body;
+  const {tipo,nombre,direccion,telefono,referencia,visita,latitud,longitud,ruta,garrafones} = req.body;
 
   let qry = `INSERT INTO POS_CLIENTES 
               (TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,RUTA,GARRAFONES)
                 VALUES
-              ('${tipo}','${nombre}','${direccion}','${telefono}','${referencia}','${visita}','${latitud}','${longitud}','${ruta}','${garrafones}')
+              ('${tipo}','${nombre}','${direccion}','${telefono}','${referencia}','${visita}','${latitud}','${longitud}','${ruta}',${garrafones})
             `
 
             console.log(qry)

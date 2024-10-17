@@ -555,8 +555,6 @@ function send_pedido(){
 
     })
 
-    
-
 
 
 
