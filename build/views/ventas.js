@@ -978,6 +978,11 @@ function get_tbl_pedidos(){
                     </td>
                     <td>${F.setMoneda(r.IMPORTE,'Q')}</td>
                     <td>
+                        <button class="btn btn-warning btn-circle hand shadow" onclick="fnc_ver_pedido('${r.CODCLIE}','${r.FECHA}','${r.CODEMP}}')">
+                            <i class="fal fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>
                         <button id="${btnPed}" class="btn btn-danger btn-circle hand shadow" 
                             onclick="fcn_eliminar_pedido('${r.FECHA}','${r.CODCLIE}','${r.CODEMP}','${btnPed}')">
                             <i class="fal fa-trash"></i>
@@ -1007,3 +1012,6 @@ function fcn_eliminar_pedido(fecha,codclie,codemp,idbtn){
 
 };
 
+function fnc_ver_pedido(codclie,fecha,codemp) {
+    
+}
