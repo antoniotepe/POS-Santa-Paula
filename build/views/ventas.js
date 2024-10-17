@@ -9,7 +9,7 @@ function getView(){
                             ${view.vista_listado()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
-                           ${view.vista_clientes() + view.vista_modal_cliente()}
+                           ${view.vista_clientes() + view.vista_modal_cliente() + view.vista_modal_editar_cliente_venta()}
                         </div>
                         <div class="tab-pane fade" id="tres" role="tabpanel" aria-labelledby="home-tab">
                             ${view.vista_nuevo()}
@@ -131,7 +131,7 @@ function getView(){
                                         <td>Nombre</td>
                                         <td>Dirección</td>
                                         <td>Teléfonos</td>
-                                        <td>Garrafones</td>
+                                        <td>Garrafones Prestados</td>
                                     </tr>
                                 </thead>
                                 <tbody id="tblDataClientes">
@@ -324,6 +324,61 @@ function getView(){
                                     <i class="fal fa-times"></i>
                                 </button>
                                 <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnGuardarCliente">
+                                    <i class="fal fa-save"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+
+            `;
+        },
+        vista_modal_editar_cliente_venta:()=> {
+            return `
+ 
+                <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_editar_cliente_venta">
+                    <div class="modal-dialog modal-dialog-right modal-xl">
+                        <div class="modal-content">
+                            
+
+
+                            <div class="modal-body p-2">
+                                <div class="card card-rounded shadow p-2">
+                                    <div class="card-body">
+                                        
+                                        <div class="form-group">
+                                            <label>Nombre:</label>
+                                            <input type="text" class="form-control" id="txtNombreClienteE"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Direccion:</label>
+                                            <input type="text" class="form-control" id="txtDireccionClienteE"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Telefono:</label>
+                                            <input type="text" class="form-control" id="txtTelefonoClienteE"/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Garrafones prestados:</label>
+                                            <input type="number" class="form-control border-danger" id="txtGarrafonesClienteE" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            
+                                
+                                
+                                
+                            </div>
+                            <div class="modal-footer text-center">
+                                <button class="btn btn-circle btn-xl btn-bottom-l btn-secondary hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-times"></i>
+                                </button>
+                                <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnEditarCliente">
                                     <i class="fal fa-save"></i>
                                 </button>
                             </div>
@@ -585,25 +640,25 @@ function get_lista_clientes(){
 
 
     axios.post('/lista_clientes',{
-        filtro:filtro
+        filtro:filtro, ruta:GlobalRuta
     })
     .then((response) => {
         let data = response.data;
         if(Number(data.rowsAffected[0])>0){
             data.recordset.map((r)=>{
                 str += `
-                                <tr class="hand" onclick="go_to_pedido('${r.CODCLIE}','${r.NOMBRE}')">
+                                <tr class="hand" >
                                     <td>${r.NOMBRE}</td>
                                     <td>${r.DIRECCION}</td>
                                     <td>${r.TELEFONO}</td>
                                     <td>${r.GARRAFONES}</td>
                                     <td>
-                                        <button class="btn btn-info btn-circle btn-md hand shadow">
+                                        <button class="btn btn-info btn-circle btn-md hand shadow" onclick="go_to_edit('${r.CODCLIE}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}','${r.GARRAFONES}')">
                                             <i class="fal fa-edit"></i>
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-secondary btn-circle btn-md hand shadow">
+                                        <button class="btn btn-secondary btn-circle btn-lg hand shadow" onclick="go_to_pedido('${r.CODCLIE}','${r.NOMBRE}')">
                                             <i class="fal fa-arrow-right"></i>
                                         </button>
                                     </td>
@@ -791,6 +846,72 @@ function go_to_pedido(codclie,nomclie){
 
 }
 
+function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie) {
+    $("#modal_editar_cliente_venta").modal('show')
+
+    document.getElementById('txtNombreClienteE').value = nombreclie;
+    document.getElementById('txtDireccionClienteE').value = direccionclie;
+    document.getElementById('txtTelefonoClienteE').value = telefonoclie;
+    document.getElementById('txtGarrafonesClienteE').value = garrafonesclie;
+
+    let btnEditarCliente = document.getElementById('btnEditarCliente');
+    btnEditarCliente.addEventListener('click', ()=> {
+        F.Confirmacion("¿Está seguro que desea editar el cliente?")
+        .then((value) => {
+            if(value==true) {
+                let nombreClieE = document.getElementById('txtNombreClienteE').value;
+                let direccionClieE = document.getElementById('txtDireccionClienteE').value;
+                let telefonoClieE = document.getElementById('txtTelefonoClienteE').value;
+                let garrafonesClieE = document.getElementById('txtGarrafonesClienteE').value;
+
+                btnEditarCliente.disabled = true;
+                btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+
+                update_cliente_venta(codclie,nombreClieE,direccionClieE,telefonoClieE,garrafonesClieE)
+                .then(() => {
+                    F.Aviso('Cliente editado exitosamente!!!');
+                    get_lista_clientes()
+                    $("#modal_editar_cliente_venta").modal('hide');
+                    limpiar_datos_cliente();
+
+                    btnEditarCliente.disabled = false;
+                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+                })
+                .catch(() => {
+                    F.Aviso('No se pudo guardar el cliente');
+                    btnEditarCliente.disabled = false;
+                    btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
+
+                })
+
+            }
+        })
+    })
+}
+
+function update_cliente_venta(codclie,nombreClie,direccionClie,telefonoClie,garrafonesClie) {
+    return new Promise((resolve, reject) => {
+
+        axios.post('/update_cliente_venta', {
+            codclie:codclie,
+            nombreClie:nombreClie,
+            direccionClie:direccionClie,
+            telefonoClie:telefonoClie,
+            garrafonesClie: garrafonesClie
+        })
+        .then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0) {
+                resolve(data);
+            } else {
+                reject();
+            }
+        }, (error) => {
+            reject();
+        });
+
+    })
+}
 
 
 function get_data_lista_pedidos(){

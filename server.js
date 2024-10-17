@@ -90,10 +90,10 @@ app.post("/insert_pedido", function(req, res) {
 
 app.post("/lista_clientes",function(req,res){
 
-    const {filtro} = req.body;
+    const {filtro,ruta} = req.body;
 
     let qry = `SELECT top 70 CODCLIE, TIPO,NOMBRE,DIRECCION,TELEFONO,REFERENCIA,VISITA,LATITUD,LONGITUD,GARRAFONES
-      FROM POS_CLIENTES WHERE NOMBRE LIKE '%${filtro}%';`
+      FROM POS_CLIENTES WHERE NOMBRE LIKE '%${filtro}%' AND RUTA='${ruta}';`
 
 
     execute.Query(res,qry)
@@ -283,7 +283,7 @@ app.post("/update_cliente", function(req, res) {
               REFERENCIA='${referencia}',
               VISITA='${visita}',
               RUTA='${ruta}',
-              GARRAFONES='${garrafones}'
+              GARRAFONES=${garrafones}
             WHERE CODCLIE=${codclie}
     `;
 
@@ -293,7 +293,22 @@ app.post("/update_cliente", function(req, res) {
 
 });
 
+app.post('/update_cliente_venta', function(req, res) {
 
+  const {codclie,nombreClie,direccionClie,telefonoClie,garrafonesClie} = req.body;
+
+  let qry = `
+            UPDATE POS_CLIENTES
+            SET NOMBRE='${nombreClie}',
+                DIRECCION='${direccionClie}',
+                TELEFONO='${telefonoClie}',
+                GARRAFONES=${garrafonesClie}
+            WHERE CODCLIE=${codclie}
+          `;
+    console.log(qry);
+    execute.Query(res,qry);
+
+})
 
 app.post("/listado_pedidos_vendedor",function(req,res){
 

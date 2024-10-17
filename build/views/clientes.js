@@ -58,6 +58,7 @@ function getView(){
                                     <td>REFERENCIA</td>
                                     <td>VISITA</td>
                                     <td>RUTA</td>
+                                    <td>GARRAFONES PRESTADOS</td>
                                 </tr>
                             </thead>
                             <tbody id="tblDataClientesCatalogo">
@@ -140,6 +141,10 @@ function getView(){
                                             <select>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label>Garrafones prestados:</label>
+                                            <input type="number" class="form-control border-danger" id="txtGarrafonesClienteE" />
+                                        </div>
 
 
                                     </div>
@@ -203,9 +208,10 @@ function get_catalogo_clientes() {
                             <td>${r.REFERENCIA}</td>
                             <td>${r.VISITA}</td>
                             <td>${r.RUTA}</td>
+                            <td>${r.GARRAFONES}</td>
                             <td>
                                    <button class="btn btn-info btn-circle btn-md hand shadow" 
-                                    onclick="get_datos_cliente('${r.CODCLIE}','${r.TIPO}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}','${r.REFERENCIA}','${r.VISITA}','${r.RUTA}')">
+                                    onclick="get_datos_cliente('${r.CODCLIE}','${r.TIPO}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}','${r.REFERENCIA}','${r.VISITA}','${r.RUTA}','${r.GARRAFONES}')">
                                         <i class="fal fa-edit"></i>
                                     </button>
 
@@ -223,7 +229,7 @@ function get_catalogo_clientes() {
     
 }
 
-function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta) {
+function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta,garrafones) {
     return new Promise((resolve, reject) => {
 
         axios.post('/update_cliente', {
@@ -234,7 +240,8 @@ function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita
             telefono:telefono,
             referencia:referencia,
             visita:visita,
-            ruta:ruta
+            ruta:ruta,
+            garrafones:garrafones
         })
         .then((response) => {
             let data = response.data;
@@ -250,7 +257,7 @@ function update_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita
     })
 }
 
-function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta) {
+function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,visita,ruta,garrafones) {
 
     $("#modal_editar_cliente").modal('show')
     document.getElementById('cmbTipoClienteE').value = tipo;
@@ -260,7 +267,7 @@ function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,vis
     document.getElementById('txtReferenciaClienteE').value = referencia;
     document.getElementById('cmbVisitaClienteE').value = visita;
     document.getElementById('cmbRutasVendedorE').value = ruta;
-
+    document.getElementById('txtGarrafonesClienteE').value = garrafones;
 
     let btnEditarCliente = document.getElementById('btnEditarCliente');
     btnEditarCliente.addEventListener('click', ()=> {
@@ -275,11 +282,12 @@ function get_datos_cliente(codclie,tipo,nombre,direccion,telefono,referencia,vis
                 let referenciaE = document.getElementById('txtReferenciaClienteE').value;
                 let visitaE = document.getElementById('cmbVisitaClienteE').value;
                 let rutaE = document.getElementById('cmbRutasVendedorE').value;
+                let garrafonesE = document.getElementById('txtGarrafonesClienteE').value;
 
                 btnEditarCliente.disabled = true;
                 btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-                update_cliente(codclie,tipoE,nombreE,direccionE,telefonoE,referenciaE,visitaE,rutaE)
+                update_cliente(codclie,tipoE,nombreE,direccionE,telefonoE,referenciaE,visitaE,rutaE,garrafonesE)
                 .then(() => {
                     F.Aviso('Cliente editado exitosamente!!!');
                     get_catalogo_clientes()
@@ -309,5 +317,6 @@ function limpiar_datos_clientes(){
     document.getElementById('txtTelefonoClienteE').value = '';
     document.getElementById('txtReferenciaClienteE').value = '';
     document.getElementById('cmbVisitaClienteE').value = '';
-    document.getElementById('cmbRutasVendedorE').value = '';    
+    document.getElementById('cmbRutasVendedorE').value = '';
+    document.getElementById('txtGarrafonesClienteE').value = '';
 }
