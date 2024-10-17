@@ -125,12 +125,12 @@ function getView(){
                     </div>
 
                         <div class="table-responsive col-12">
-                            <table class="table table-responsive col-12">
+                            <table class="table table-responsive col-12 h-full">
                                 <thead class="bg-naranja text-white">
                                     <tr>
                                         <td>Nombre</td>
                                         <td>Dirección</td>
-                                        <td>Garrafones Prestados</td>
+                                        <td>Grf</td>
                                     </tr>
                                 </thead>
                                 <tbody id="tblDataClientes">
@@ -660,7 +660,7 @@ function get_lista_clientes(){
                                         <small class="negrita text-secondary">${r.REFERENCIA}</small>
                                         <br>
                                         <button class="btn btn-success btn-sm hand shadow" onclick="go_to_pedido('${r.CODCLIE}','${r.NOMBRE}')">
-                                            <i class="fal fa-plus"></i>Nuevo Pedido
+                                            <i class="fal fa-plus"></i>Pedido
                                         </button>
                                     </td>
                                     <td class="negrita text-danger">${r.GARRAFONES}</td>
