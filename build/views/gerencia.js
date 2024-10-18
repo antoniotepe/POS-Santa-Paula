@@ -257,8 +257,8 @@ function addListeners(){
                 .then(()=> {
                     
                     F.Aviso('Empleado guardado exitosamente!!!');    
+                    $("#modal_nuevo_usuario").modal('hide')
                     get_lista_empleados()
-                    $("#modal_nuevo_empleado").modal('hide');
                     limpiar_datos_empleado();
 
                     btnGuardarEmpleado.disabled = false;
