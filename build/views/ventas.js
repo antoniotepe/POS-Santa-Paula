@@ -58,7 +58,7 @@ function getView(){
                             </div>
                         </div>
                         <div class="col-sm-6  col-md-8 col-lg-8 col-xl-8">
-                            <h1 style="font-size:280%" class="text-right negrita text-danger">Q0.00</h1>
+                            <h1 style="font-size:280%" class="text-right negrita text-danger" id="lbTotalPedidos">Q0.00</h1>
                         </div>
                     </div>
 
@@ -743,6 +743,7 @@ function create_tbl_pedido(){
     let container = document.getElementById('tblDataPedidos');
     let str = '';
 
+   
 
     db_select_temp_ventas()
     .then((datos)=>{
@@ -750,7 +751,7 @@ function create_tbl_pedido(){
     
         datos.map((r)=>{
             let idProducto = r.CODPROD;
-
+           
             str += `
             <tr>
                 <td>${r.DESPROD}</td>
@@ -865,6 +866,8 @@ function go_to_pedido(codclie,nomclie){
     document.getElementById('lbNomclie').innerText = nomclie;
 
     document.getElementById("tab-tres").click();
+    
+    document.getElementById('lbTotalVenta').innerHTML = `Q 0.00`;
     get_lista_productos_pedido();
 
 }
@@ -964,11 +967,14 @@ function get_tbl_pedidos(){
     let container = document.getElementById('tblPedidos')
     container.innerHTML = GlobalLoader;
 
+    let varTotal = 0;
+
     get_data_lista_pedidos()
     .then((data)=>{
 
         let str = '';
         data.recordset.map((r)=>{
+            varTotal += Number(r.IMPORTE);
             let btnPed = `btnEliminar${r.CODCLIE}${r.CODEMP}` 
             str += `
                 <tr>
@@ -978,7 +984,7 @@ function get_tbl_pedidos(){
                     </td>
                     <td>${F.setMoneda(r.IMPORTE,'Q')}</td>
                     <td>
-                        <button class="btn btn-warning btn-circle hand shadow" onclick="fnc_ver_pedido('${r.CODCLIE}','${r.FECHA}','${r.CODEMP}}')">
+                        <button class="btn btn-info btn-circle hand shadow" onclick="fnc_ver_pedido('${r.CODCLIE}','${r.FECHA}','${r.CODEMP}}')">
                             <i class="fal fa-eye"></i>
                         </button>
                     </td>
@@ -992,12 +998,13 @@ function get_tbl_pedidos(){
             `
         })
         container.innerHTML = str;
+        document.getElementById('lbTotalPedidos').innerText = F.setMoneda(varTotal,'Q');
 
     })
     .catch((error)=>{
         console.log(error)
         container.innerHTML = 'No hay datos para mostrar...'
-
+        document.getElementById('lbTotalPedidos').innerText = 'Q 0.00'
     })
 
 
