@@ -6,7 +6,7 @@ function getView(){
                 <div class="col-12 p-0 bg-white">
                     <div class="tab-content" id="myTabHomeContent">
                         <div class="tab-pane fade show active" id="uno" role="tabpanel" aria-labelledby="receta-tab">
-                            ${view.vista_listado()}
+                            ${view.vista_listado() + view.vista_modal_detalle_pedido()}
                         </div>
                         <div class="tab-pane fade" id="dos" role="tabpanel" aria-labelledby="home-tab">
                            ${view.vista_clientes() + view.vista_modal_cliente() + view.vista_modal_editar_cliente_venta()}
@@ -363,6 +363,61 @@ function getView(){
                                         <div class="form-group">
                                             <label>Garrafones prestados:</label>
                                             <input type="number" class="form-control border-danger" id="txtGarrafonesClienteE" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            
+                                
+                                
+                                
+                            </div>
+                            <div class="modal-footer text-center">
+                                <button class="btn btn-circle btn-xl btn-bottom-l btn-secondary hand shadow" data-dismiss="modal">
+                                    <i class="fal fa-times"></i>
+                                </button>
+                                <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnEditarCliente">
+                                    <i class="fal fa-save"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+
+            `;
+        },
+        vista_modal_detalle_pedido:() => {
+            return `
+ 
+                <div class="modal fade js-modal-settings modal-backdrop-transparent modal-with-scroll" tabindex="-1" role="dialog" aria-hidden="true" id="modal_detalle_pedido">
+                    <div class="modal-dialog modal-dialog-right modal-xl">
+                        <div class="modal-content">
+                            
+
+
+                            <div class="modal-body p-2">
+                                <div class="card card-rounded shadow p-2">
+                                    <div class="card-body">
+                                        
+                                        <div class="form-group">
+                                            <label>Producto:</label>
+                                            <input type="text" class="form-control" id=""/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Cantidad:</label>
+                                            <input type="text" class="form-control" id=""/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Precio:</label>
+                                            <input type="text" class="form-control" id=""/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Importe:</label>
+                                            <input type="number" class="form-control" id="" />
                                         </div>
 
 
@@ -1020,5 +1075,5 @@ function fcn_eliminar_pedido(fecha,codclie,codemp,idbtn){
 };
 
 function fnc_ver_pedido(codclie,fecha,codemp) {
-    
+    $("#modal_detalle_pedido").modal('show');
 }
