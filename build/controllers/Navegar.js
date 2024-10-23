@@ -2,18 +2,21 @@ let Navegar = {
     login:()=>{
         F.loadScript('./views/login.js','root')
         .then(()=>{
+            document.getElementById("rootFooter").innerHTML = '';
             initView();
         })
     },
     ventas:()=> {
         F.loadScript('./views/ventas.js', 'root')
         .then(()=>{
+            document.getElementById("rootFooter").innerHTML = '';
             initView();
         })
     },
     gerencia:()=> {
         F.loadScript('./views/gerencia.js', 'root')
         .then(()=>{
+            //document.getElementById("rootFooter").innerHTML = '';
             initView();
         })
     },

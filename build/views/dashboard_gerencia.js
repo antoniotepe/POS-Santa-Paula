@@ -50,11 +50,7 @@ function getView(){
             <br>
             <br>
             <br>
-            <div class="col-md-6 text-end">
-                <button class="btn btn-primary me-2" id="btnViewVentas">Ventas</button>
-                <button class="btn btn-secondary me-2" id="btnViewEmpleados">Empleados</button>
-                <button class="btn btn-info" id="btnViewClientes">Clientes</button>
-            </div>
+            
             <div class="row">
             <div class="col-md-6">
                 <h3 class="text-center">Report. Ventas</h3>
@@ -95,17 +91,32 @@ function getView(){
         },
         vista_nuevo:()=>{
 
+        },
+        menu_footer:()=>{
+            return `
+                            <button class="btn btn-md btn-naranja" id="btnViewDashboard">
+                                <i class="fal fa-chart-pie"></i>Dashboard
+                            </button>
+                            <button class="btn btn-md btn-naranja" id="btnViewEmpleados">
+                                <i class="fal fa-user"></i>Usuarios
+                            </button>
+                            <button class="btn btn-md btn-naranja" id="btnViewClientes">
+                                <i class="fal fa-users"></i>Clientes
+                            </button>
+                            
+            `
         }
     }
 
     root.innerHTML = view.body();
+    document.getElementById("rootFooter").innerHTML = view.menu_footer();
 
 };
 
 function addListeners(){
-    let btnViewVentas = document.getElementById('btnViewVentas');
+    let btnViewVentas = document.getElementById('btnViewDashboard');
     btnViewVentas.addEventListener('click', () => {
-        Navegar.ventas();
+        Navegar.dashboard_gerencia();
     });
 
     let btnViewClientes = document.getElementById('btnViewClientes');
