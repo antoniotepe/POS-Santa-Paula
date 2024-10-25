@@ -88,6 +88,23 @@ app.post("/insert_pedido", function(req, res) {
 });
 
 
+app.post("/detalle_pedido",function(req,res){
+
+  const {codclie,codemp,fecha} = req.body;
+
+  let qry = `
+  SELECT CODPROD,DESPROD, CANTIDAD, PRECIO, TOTALPRECIO, CONCRE 
+  FROM POS_ORDERS 
+  WHERE CODCLIE=${codclie} AND CODEMP=${codemp} AND FECHA='${fecha}'
+   ;`
+
+   console.log(qry)
+
+  execute.Query(res,qry)
+
+}); 
+
+
 app.post("/lista_clientes",function(req,res){
 
     const {filtro,ruta} = req.body;

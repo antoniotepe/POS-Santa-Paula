@@ -397,36 +397,33 @@ function getView(){
 
 
                             <div class="modal-body p-2">
-                                <div class="card card-rounded shadow p-2">
+                                <div class="card card-rounded shadow p-4 col-12">
                                     <div class="card-body">
                                         
-                                        <div class="form-group">
-                                            <label>Producto:</label>
-                                            <input type="text" class="form-control" id=""/>
-                                        </div>
+                                        <h3  class="negrita text-danger" id="lbNomcliePedido"></h3>
 
-                                        <div class="form-group">
-                                            <label>Cantidad:</label>
-                                            <input type="text" class="form-control" id=""/>
-                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-responsive table-hover">
+                                                <thead class="bg-info text-white">
+                                                    <tr>
+                                                        <td>PRODUCTO</td>
+                                                        <td>CANTIDAD</td>
+                                                        <td>PRECIO</td>
+                                                        <td>IMPORTE</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblDataDetallePedido">
 
-                                        <div class="form-group">
-                                            <label>Precio:</label>
-                                            <input type="text" class="form-control" id=""/>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label>Importe:</label>
-                                            <input type="number" class="form-control" id="" />
-                                        </div>
-
+                                        
 
                                     </div>
                                 </div>
                             
                                 
-                                
-                                
+                                                            
                             </div>
                             <div class="modal-footer text-center">
                                 <button class="btn btn-circle btn-xl btn-bottom-l btn-secondary hand shadow" data-dismiss="modal">
@@ -437,7 +434,7 @@ function getView(){
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>>
                 </div>            
 
             `;
@@ -1039,7 +1036,7 @@ function get_tbl_pedidos(){
                     </td>
                     <td>${F.setMoneda(r.IMPORTE,'Q')}</td>
                     <td>
-                        <button class="btn btn-info btn-circle hand shadow" onclick="fnc_ver_pedido('${r.CODCLIE}','${r.FECHA}','${r.CODEMP}}')">
+                        <button class="btn btn-info btn-circle hand shadow" onclick="fnc_ver_pedido('${r.CODCLIE}','${r.FECHA.replace('T00:00:00.000Z','')}','${r.CODEMP}','${r.CLIENTE}')">
                             <i class="fal fa-eye"></i>
                         </button>
                     </td>
@@ -1074,6 +1071,48 @@ function fcn_eliminar_pedido(fecha,codclie,codemp,idbtn){
 
 };
 
-function fnc_ver_pedido(codclie,fecha,codemp) {
+function fnc_ver_pedido(codclie,fecha,codemp,nomclie) {
     $("#modal_detalle_pedido").modal('show');
+
+    document.getElementById("lbNomcliePedido").textContent = nomclie;
+
+    let container = document.getElementById("tblDataDetallePedido");
+    container.innerHTML = GlobalLoader;
+
+
+
+    axios.post('/detalle_pedido', 
+        {
+            codemp:GlobalCodemp,
+            fecha: fecha,
+            codclie:codclie
+        }
+    ).then((response) => {
+        let data = response.data;
+        if(Number(data.rowsAffected[0])>0) {
+            
+            let str = "";
+
+            data.recordset.map((r)=>{
+                str += `
+                <tr>
+                    <td>${r.DESPROD}</td>
+                    <td>${r.CANTIDAD}</td>
+                    <td>${F.setMoneda(r.PRECIO,'Q')}</td>
+                    <td>${F.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                </tr>
+                `
+                
+            })
+            container.innerHTML = str;
+
+        } else {
+            container.innerHTML = 'No se cargaron datos....';
+        }
+    }, (error) => {
+        container.innerHTML = 'No se cargaron datos....';
+    });
+
+
+
 }
