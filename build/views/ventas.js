@@ -1066,7 +1066,7 @@ function get_tbl_pedidos(){
 
 function fcn_eliminar_pedido(fecha,codclie,codemp,idbtn){
 
-    F.Aviso('Opción aún no disponible')
+    F.AvisoError('Opción aún no disponible')
     
 
 };
