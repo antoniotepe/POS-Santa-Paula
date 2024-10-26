@@ -437,9 +437,7 @@ function getView(){
                                 <button class="btn btn-circle btn-xl btn-bottom-l btn-secondary hand shadow" data-dismiss="modal">
                                     <i class="fal fa-times"></i>
                                 </button>
-                                <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnEditarCliente">
-                                    <i class="fal fa-save"></i>
-                                </button>
+                                
                             </div>
                         </div>
                     </div>>
