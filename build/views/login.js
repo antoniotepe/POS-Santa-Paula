@@ -41,7 +41,7 @@ function getView(){
                 <div class="card-body p-4">
                     
                     <div class="text-center">
-                        <img src="img/favicon.png" class="rounded mx-auto d-block" width="100px" height="100px">
+                        <img src="img/logo_santa_paula.jpg" class="rounded mx-auto d-block" width="100px" height="100px">
                     </div>
 
                     <div class="form-group">
