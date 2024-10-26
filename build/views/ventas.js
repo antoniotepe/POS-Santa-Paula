@@ -350,9 +350,14 @@ function getView(){
                                             <label>Nombre:</label>
                                             <input type="text" class="form-control" id="txtNombreClienteE"/>
                                         </div>
-
+                                        
                                         <div class="form-group">
-                                            <label>Direccion:</label>
+                                            <label>Referencia:</label>
+                                            <input type="text" class="form-control" id="txtReferenciaClienteE"/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                        <label>Direccion:</label>
                                             <input type="text" class="form-control" id="txtDireccionClienteE"/>
                                         </div>
 
@@ -360,6 +365,8 @@ function getView(){
                                             <label>Telefono:</label>
                                             <input type="text" class="form-control" id="txtTelefonoClienteE"/>
                                         </div>
+
+
 
                                         <div class="form-group">
                                             <label>Garrafones prestados:</label>
@@ -704,7 +711,7 @@ function get_lista_clientes(){
                                         <br>
                                         <small class="negrita text-info">Tel:${r.TELEFONO}</small>
                                         <br>
-                                         <button class="btn btn-info btn-sm hand shadow" onclick="go_to_edit('${r.CODCLIE}','${r.NOMBRE}','${r.DIRECCION}','${r.TELEFONO}','${r.GARRAFONES}')">
+                                         <button class="btn btn-info btn-sm hand shadow" onclick="go_to_edit('${r.CODCLIE}','${r.NOMBRE}','${r.REFERENCIA}','${r.DIRECCION}','${r.TELEFONO}','${r.GARRAFONES}')">
                                             <i class="fal fa-edit"></i>Editar
                                         </button>
                                     </td>
@@ -925,10 +932,11 @@ function go_to_pedido(codclie,nomclie){
 
 }
 
-function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie) {
+function go_to_edit(codclie,nombreclie,referenciaclie,direccionclie,telefonoclie,garrafonesclie) {
     $("#modal_editar_cliente_venta").modal('show')
 
     document.getElementById('txtNombreClienteE').value = nombreclie;
+    document.getElementById('txtReferenciaClienteE').value = referenciaclie;
     document.getElementById('txtDireccionClienteE').value = direccionclie;
     document.getElementById('txtTelefonoClienteE').value = telefonoclie;
     document.getElementById('txtGarrafonesClienteE').value = garrafonesclie;
@@ -939,6 +947,7 @@ function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie
         .then((value) => {
             if(value==true) {
                 let nombreClieE = document.getElementById('txtNombreClienteE').value;
+                let referenciaClieE = document.getElementById('txtReferenciaClienteE').value;
                 let direccionClieE = document.getElementById('txtDireccionClienteE').value;
                 let telefonoClieE = document.getElementById('txtTelefonoClienteE').value;
                 let garrafonesClieE = document.getElementById('txtGarrafonesClienteE').value;
@@ -946,7 +955,7 @@ function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie
                 btnEditarCliente.disabled = true;
                 btnEditarCliente.innerHTML = `<i class="fal fa-save fa-spin"></i>`;
 
-                update_cliente_venta(codclie,nombreClieE,direccionClieE,telefonoClieE,garrafonesClieE)
+                update_cliente_venta(codclie,nombreClieE,referenciaClieE,direccionClieE,telefonoClieE,garrafonesClieE)
                 .then(() => {
                     F.Aviso('Cliente editado exitosamente!!!');
                     get_lista_clientes()
@@ -968,11 +977,12 @@ function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie
     })
 }
 
-function update_cliente_venta(codclie,nombreClie,direccionClie,telefonoClie,garrafonesClie) {
+function update_cliente_venta(codclie,nombreClie,referenciaClie,direccionClie,telefonoClie,garrafonesClie) {
     return new Promise((resolve, reject) => {
 
         axios.post('/update_cliente_venta', {
             codclie:codclie,
+            referenciaClie:referenciaClie,
             nombreClie:nombreClie,
             direccionClie:direccionClie,
             telefonoClie:telefonoClie,

@@ -324,11 +324,12 @@ app.post("/update_cliente", function(req, res) {
 
 app.post('/update_cliente_venta', function(req, res) {
 
-  const {codclie,nombreClie,direccionClie,telefonoClie,garrafonesClie} = req.body;
+  const {codclie,nombreClie,referenciaClie,direccionClie,telefonoClie,garrafonesClie} = req.body;
 
   let qry = `
             UPDATE POS_CLIENTES
             SET NOMBRE='${nombreClie}',
+                REFERENCIA='${referenciaClie}',
                 DIRECCION='${direccionClie}',
                 TELEFONO='${telefonoClie}',
                 GARRAFONES=${garrafonesClie}
