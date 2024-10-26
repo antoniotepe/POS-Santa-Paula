@@ -378,7 +378,7 @@ function getView(){
                                 <button class="btn btn-circle btn-xl btn-bottom-l btn-secondary hand shadow" data-dismiss="modal">
                                     <i class="fal fa-times"></i>
                                 </button>
-                                <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnEditarCliente">
+                                <button class="btn btn-circle btn-xl btn-info btn-bottom-r hand shadow" id="btnEditarClienteVenta">
                                     <i class="fal fa-save"></i>
                                 </button>
                             </div>
@@ -933,7 +933,7 @@ function go_to_edit(codclie,nombreclie,direccionclie,telefonoclie,garrafonesclie
     document.getElementById('txtTelefonoClienteE').value = telefonoclie;
     document.getElementById('txtGarrafonesClienteE').value = garrafonesclie;
 
-    let btnEditarCliente = document.getElementById('btnEditarCliente');
+    let btnEditarCliente = document.getElementById('btnEditarClienteVenta');
     btnEditarCliente.addEventListener('click', ()=> {
         F.Confirmacion("¿Está seguro que desea editar el cliente?")
         .then((value) => {
