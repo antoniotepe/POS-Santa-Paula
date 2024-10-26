@@ -43,7 +43,7 @@ function getView(){
                     <div class="col-md-6 d-flex align-items-center">
                         <img src="img/favicon.png" class="rounded me-3" width="100px" height="100px">
                     <div>
-                        <h1 style="font-size:280%" class="text-right negrita text-danger mb-0">Purificadora Santa Clara</h1>
+                        <h1 style="font-size:280%" class="text-right negrita text-danger mb-0">Purificadora Santa Paula</h1>
                         <h2>Gestión Administrativa</h2>
                     </div>
                 </div>
