@@ -1,3 +1,4 @@
+const { response } = require("express");
 
 function getView(){
     let view = {
@@ -1042,7 +1043,7 @@ function get_tbl_pedidos(){
                     </td>
                     <td>
                         <button id="${btnPed}" class="btn btn-danger btn-circle hand shadow" 
-                            onclick="fcn_eliminar_pedido('${r.FECHA}','${r.CODCLIE}','${r.CODEMP}','${btnPed}')">
+                            onclick="fcn_eliminar_pedido('${r.FECHA.replace('T00:00:00.000Z','')}','${r.CODCLIE}','${r.CODEMP}','${btnPed}')">
                             <i class="fal fa-trash"></i>
                         </button>
                     </td>
@@ -1064,12 +1065,39 @@ function get_tbl_pedidos(){
 
 
 
-function fcn_eliminar_pedido(fecha,codclie,codemp,idbtn){
+function fcn_eliminar_pedido(fecha, codclie, codemp, idbtn) {
+    // Solicitar confirmación al usuario
+    F.Confirmacion("¿Está seguro que desea eliminar el pedido?")
+        .then((value) => {
+            if (value) {
+                // Deshabilitar el botón mientras se procesa la solicitud
+                document.getElementById(idbtn).disabled = true;
 
-    F.AvisoError('Opción aún no disponible')
-    
+                // Enviar solicitud de eliminación
+                axios.post('/eliminar_detalle_pedido', {
+                    fecha: fecha,
+                    codclie: codclie,
+                    codemp: codemp
+                })
+                .then((response) => {
+                    if (response.data.success) {
+                        // Actualizar la tabla para reflejar que el pedido fue eliminado
+                    }
+                    F.Aviso("Pedido eliminado correctamente");
+                    get_tbl_pedidos()
+                })
+                .catch((error) => {
+                    console.error(error);
+                    F.AvisoError("Ocurrió un error al eliminar el pedido");
+                })
+                .finally(() => {
+                    // Habilitar el botón nuevamente
+                    document.getElementById(idbtn).disabled = false;
+                });
+            }
+        });
+}
 
-};
 
 function fnc_ver_pedido(codclie,fecha,codemp,nomclie) {
     $("#modal_detalle_pedido").modal('show');

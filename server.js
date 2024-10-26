@@ -104,6 +104,18 @@ app.post("/detalle_pedido",function(req,res){
 
 }); 
 
+app.post("/eliminar_detalle_pedido", function(req, res) {
+  
+  const {codclie, codemp, fecha} = req.body;
+
+  let qry = `
+            DELETE FROM POS_ORDERS WHERE CODCLIE=${codclie} AND CODEMP=${codemp} AND FECHA='${fecha}';
+          `;
+
+  console.log(qry)
+  execute.Query(res,qry)
+
+});
 
 app.post("/lista_clientes",function(req,res){
 
