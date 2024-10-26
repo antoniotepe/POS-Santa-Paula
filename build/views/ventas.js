@@ -1081,7 +1081,6 @@ function fcn_eliminar_pedido(fecha, codclie, codemp, idbtn) {
                 })
                 .then((response) => {
                     if (response.data.success) {
-                        // Actualizar la tabla para reflejar que el pedido fue eliminado
                     }
                     F.Aviso("Pedido eliminado correctamente");
                     get_tbl_pedidos()
