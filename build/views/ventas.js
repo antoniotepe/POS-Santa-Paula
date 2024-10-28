@@ -858,8 +858,6 @@ function create_tbl_pedido(){
 
 }
 
-
-
 function cambiarCantidad(codprod, cambio, precio) {
     let elementoCantidad = document.getElementById(`cantidad-${codprod}`);
     let elementoSubtotal = document.getElementById(`subtotal-${codprod}`);
@@ -941,7 +939,6 @@ function insert_cliente(tipo,nombre,direccion,telefono,referencia,visita,latitud
     })
    
 }
-
 
 function go_to_pedido(codclie,nomclie){
 
@@ -1163,8 +1160,6 @@ function get_tbl_pedidos_productos(){
 
 };
 
-
-
 function fcn_eliminar_pedido(fecha, codclie, codemp, idbtn) {
     // Solicitar confirmación al usuario
     F.Confirmacion("¿Está seguro que desea eliminar el pedido?")
@@ -1196,7 +1191,6 @@ function fcn_eliminar_pedido(fecha, codclie, codemp, idbtn) {
             }
         });
 }
-
 
 function fnc_ver_pedido(codclie,fecha,codemp,nomclie) {
     $("#modal_detalle_pedido").modal('show');
