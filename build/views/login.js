@@ -104,6 +104,8 @@ function enviarLogin() {
     
     let btnLogin = document.getElementById("btnLogin");
 
+    F.limpiarTexto(usuario);
+    F.limpiarTexto(clave);
 
     if (!usuario || !clave) {
         F.Aviso("Por favor, ingrese su usuario y clave");

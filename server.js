@@ -98,7 +98,6 @@ app.post("/detalle_pedido",function(req,res){
   WHERE CODCLIE=${codclie} AND CODEMP=${codemp} AND FECHA='${fecha}'
    ;`
 
-   console.log(qry)
 
   execute.Query(res,qry)
 
@@ -112,7 +111,6 @@ app.post("/eliminar_detalle_pedido", function(req, res) {
             DELETE FROM POS_ORDERS WHERE CODCLIE=${codclie} AND CODEMP=${codemp} AND FECHA='${fecha}';
           `;
 
-  console.log(qry)
   execute.Query(res,qry)
 
 });
@@ -140,7 +138,6 @@ app.post("/insert_cliente",function(req,res){
               ('${tipo}','${nombre}','${direccion}','${telefono}','${referencia}','${visita}','${latitud}','${longitud}','${ruta}',${garrafones})
             `
 
-            console.log(qry)
 
   execute.Query(res,qry)
 
@@ -153,7 +150,6 @@ app.post("/lista_usuarios_login", function(req, res) {
   let qry = `SELECT CODEMP AS CODIGO, NOMBRE AS usuario, TIPO AS tipo, RUTA AS ruta FROM POS_EMPLEADOS
              WHERE NOMBRE='${usuario}' AND CLAVE='${clave}'`;
 
-  console.log(qry);
 
   execute.Query(res, qry, (err, result) => {
 
@@ -316,7 +312,6 @@ app.post("/update_cliente", function(req, res) {
             WHERE CODCLIE=${codclie}
     `;
 
-    console.log(qry);
 
     execute.Query(res,qry);
 
@@ -335,7 +330,6 @@ app.post('/update_cliente_venta', function(req, res) {
                 GARRAFONES=${garrafonesClie}
             WHERE CODCLIE=${codclie}
           `;
-    console.log(qry);
     execute.Query(res,qry);
 
 })
@@ -350,7 +344,24 @@ app.post("/listado_pedidos_vendedor",function(req,res){
               HAVING (POS_ORDERS.CODEMP = ${codemp}) AND (POS_ORDERS.FECHA = '${fecha}')`
 
 
-              console.log(qry)
+  execute.Query(res,qry)
+
+}); 
+
+app.post("/listado_pedidos_vendedor_productos",function(req,res){
+
+  const {codemp,fecha} = req.body;
+
+  let qry = `
+  SELECT POS_ORDERS.CODPROD, POS_PRODUCTOS.DESPROD, SUM(POS_ORDERS.CANTIDAD) AS CANTIDAD, SUM(POS_ORDERS.COSTO) AS COSTO, SUM(POS_ORDERS.PRECIO) AS PRECIO, SUM(POS_ORDERS.TOTALCOSTO) AS TOTALCOSTO, SUM(POS_ORDERS.TOTALPRECIO) 
+                  AS TOTALPRECIO
+FROM     POS_ORDERS LEFT OUTER JOIN
+                  POS_PRODUCTOS ON POS_ORDERS.CODPROD = POS_PRODUCTOS.CODPROD
+WHERE  (POS_ORDERS.FECHA = '${fecha}') AND  (POS_ORDERS.CODEMP = ${codemp})
+GROUP BY POS_ORDERS.CODPROD, POS_PRODUCTOS.DESPROD
+  `
+
+
   execute.Query(res,qry)
 
 }); 

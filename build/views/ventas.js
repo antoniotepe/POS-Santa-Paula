@@ -1,4 +1,4 @@
-const { response } = require("express");
+
 
 function getView(){
     let view = {
@@ -59,7 +59,11 @@ function getView(){
                             </div>
                         </div>
                         <div class="col-sm-6  col-md-8 col-lg-8 col-xl-8">
-                            <h1 style="font-size:280%" class="text-right negrita text-danger" id="lbTotalPedidos">Q0.00</h1>
+                        <h1 style="font-size:280%" class="text-right negrita text-danger" id="lbTotalPedidos">Q0.00</h1>
+                        <select class="form-control negrita text-danger" id="cmbTipoRpt">
+                            <option value="CLIENTE">POR CLIENTE</option>
+                            <option value="PRODUCTO">POR PRODUCTO</option>
+                        </select>
                         </div>
                     </div>
 
@@ -72,8 +76,9 @@ function getView(){
                         <table class="table table-responsive table-hover col-12">
                             <thead class="bg-naranja text-white">
                                 <tr>
-                                    <td>CLIENTE</td>
+                                    <td>NOMBRE</td>
                                     <td>IMPORTE</td>
+                                    <td>C</td>
                                     <td></td>
                                 </tr>
                             </thead>
@@ -619,11 +624,32 @@ function addListeners(){
     get_tbl_pedidos();
 
     document.getElementById('txtFecha').addEventListener('change',()=>{
-        get_tbl_pedidos();
+        getReporte();
     })
+
+    document.getElementById('cmbTipoRpt').addEventListener('change',()=>{
+        getReporte();
+    })
+
     
 
 };
+
+function getReporte(){
+
+    let tipo = document.getElementById('cmbTipoRpt').value;
+
+        switch (tipo) {
+            case 'CLIENTE':
+                get_tbl_pedidos();
+                break;
+        
+            case 'PRODUCTO':
+                get_tbl_pedidos_productos();
+                break;
+        }
+
+}
 
 function initView(){
 
@@ -688,7 +714,8 @@ function limpiar_datos_cliente(){
 
 function get_lista_clientes(){
 
-    let filtro = document.getElementById('txtFiltrar').value || '';
+    let filtro = document.getElementById('txtFiltrar').value;
+    F.limpiarTexto(filtro) || '';
     if(filtro==''){F.AvisoError('Escriba un codigo o nombre para buscar');return;}
 
     let container = document.getElementById('tblDataClientes');
@@ -1054,6 +1081,71 @@ function get_tbl_pedidos(){
                             onclick="fcn_eliminar_pedido('${r.FECHA.replace('T00:00:00.000Z','')}','${r.CODCLIE}','${r.CODEMP}','${btnPed}')">
                             <i class="fal fa-trash"></i>
                         </button>
+                    </td>
+                </tr>
+            `
+        })
+        container.innerHTML = str;
+        document.getElementById('lbTotalPedidos').innerText = F.setMoneda(varTotal,'Q');
+
+    })
+    .catch((error)=>{
+        console.log(error)
+        container.innerHTML = 'No hay datos para mostrar...'
+        document.getElementById('lbTotalPedidos').innerText = 'Q 0.00'
+    })
+
+
+};
+
+function get_data_lista_pedidos_productos(){
+    return new Promise((resolve,reject)=>{
+        
+        axios.post('/listado_pedidos_vendedor_productos', 
+            {
+                codemp:GlobalCodemp,
+                fecha: F.devuelveFecha('txtFecha')
+            }
+        ).then((response) => {
+            let data = response.data;
+            if(Number(data.rowsAffected[0])>0) {
+                resolve(data);
+            } else {
+                reject();
+            }
+        }, (error) => {
+            reject();
+        });
+
+    })
+}
+
+function get_tbl_pedidos_productos(){
+
+    let container = document.getElementById('tblPedidos')
+    container.innerHTML = GlobalLoader;
+
+    let varTotal = 0;
+
+    get_data_lista_pedidos_productos()
+    .then((data)=>{
+
+        let str = '';
+        data.recordset.map((r)=>{
+            varTotal += Number(r.IMPORTE);
+            let btnPed = `btnEliminar${r.CODCLIE}${r.CODEMP}` 
+            str += `
+                <tr>
+                    <td>${r.DESPROD}
+                        <br>
+                        <small>Pago: ${r.CODPROD}</small>
+                    </td>
+                    <td>${F.setMoneda(r.TOTALPRECIO,'Q')}</td>
+                    <td>
+                        ${r.CANTIDAD}
+                    </td>
+                    <td>
+                        
                     </td>
                 </tr>
             `
