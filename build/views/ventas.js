@@ -649,15 +649,7 @@ function getReporte(){
                 break;
         }
 
-}
-
-function initView(){
-
-    getView();
-    addListeners();
-
 };
-
 
 
 function send_pedido(){
