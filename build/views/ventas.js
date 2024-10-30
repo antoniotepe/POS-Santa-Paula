@@ -530,12 +530,12 @@ function addListeners(){
                 .then((location)=>{
 
                         let tipo = document.getElementById('cmbTipoCliente').value;
-                        let nombre = document.getElementById('txtNombreCliente').value || '';
-                        let direccion = document.getElementById('txtDireccionCliente').value || '';
+                        let nombre = F.limpiarTexto(document.getElementById('txtNombreCliente').value) || '';
+                        let direccion = F.limpiarTexto(document.getElementById('txtDireccionCliente').value) || '';
                         let telefono = document.getElementById('txtTelefonoCliente').value || '';
-                        let referencia = document.getElementById('txtReferenciaCliente').value;
+                        let referencia = F.limpiarTexto(document.getElementById('txtReferenciaCliente').value);
                         let visita = document.getElementById('cmbVisitaCliente').value;
-                        let garrafones = document.getElementById('txtGarrafonesCliente').value;
+                        let garrafones = document.getElementById('txtGarrafonesCliente').value|| '0';
                         let latitud = location.latitude;
                         let longitud = location.longitude;
 
