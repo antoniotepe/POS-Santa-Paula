@@ -1,13 +1,22 @@
 ﻿
-let config = {
-	user: 'DB_A6478C_autoventa_admin',
+/* let config = {
+	user: 'db_a6478c_fsya_admin',
 	password: 'razors1805',
-	server: 'sql5094.site4now.net',
-	database: 'DB_A6478C_autoventa',
+	server: 'sql5112.site4now.net',
+	database: 'db_a6478c_fsya',
 	pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000}
 };
+ */
 
 
+	let config = {
+		user: 'antonioDB',
+		password: 'antonio',
+		server: '127.0.0.1',
+		database: 'db_laboratorio',
+		pool: {	max: 100,	min: 0,	idleTimeoutMillis: 30000},
+		port: 3307
+	};
 
 let configLocal = {
 	user: 'iEx', 

@@ -1,5 +1,5 @@
 {
-  "name": "purificadora_santa_paula",
+  "name": "sistema_laboratorio",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Alexis Burgos",
+  "author": "Antonio Tepe",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.19.4"
